@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "pledgecamp-contracts-analyze"
+version = "0.1.0"
+description = "Analysis for Pledgecamp smart contracts"
+authors = ["Sam Pullman <spullman@pledgecamp.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+slither-analyzer = { git = "https://github.com/crytic/slither.git", branch = "master" }
+solc-select = "0.2.1"
+certifi = "2021.05.30"
+click = "8.0.1"
+mythril = "0.22.21"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,15 @@
+.git
+.github
+.env
+analysis
+build
+logs
+coverage
+dist/
+node_modules/
+*.zip
+.DS_Store
+log
+*~
+# IDE
+.vscode/
