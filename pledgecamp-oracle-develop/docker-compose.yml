@@ -1,0 +1,11 @@
+postgresql:
+    container_name: pledgecamp_oracle_postgresql
+    image: postgres:11-alpine
+    ports:
+      - 6012:5432
+    volumes:
+      - ./docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+    environment:
+      - POSTGRES_DB=pledgecamp_oracle
+      - POSTGRES_USER=pledgecamp_oracle
+      - POSTGRES_PASSWORD=development

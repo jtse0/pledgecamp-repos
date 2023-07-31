@@ -1,0 +1,14 @@
+FROM pledgecamp/golang AS builder
+
+ENV PROJECT_PATH $GOPATH/src/github.com/pledgecamp/pledgecamp-oracle
+COPY . $PROJECT_PATH/
+WORKDIR $PROJECT_PATH
+RUN go install
+RUN echo $GOPATH/src/github.com/pledgeca mp/pledgecamp-oracle/db/migrations
+
+FROM ubuntu:focal
+ENV PROJECT_PATH $GOPATH/src/github.com/pledgecamp/pledgecamp-oracle
+WORKDIR /src
+COPY --from=builder /usr/local/go/bin/pledgecamp-oracle /usr/local/go/bin/pledgecamp-oracle
+COPY --from=builder /usr/local/go/src/github.com/pledgecamp/pledgecamp-oracle/db/migrations /src/db/migrations
+CMD ["/usr/local/go/bin/pledgecamp-oracle"]

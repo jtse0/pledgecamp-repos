@@ -1,0 +1,1518 @@
+openapi: 3.0.0
+info:
+  title: Pledgecamp-Oracle
+  version: v1.0
+servers:
+  - url: 'http://oracle.localdev.com:8081'
+    description: Development
+  - description: Production
+    url: https://pledgecamp.com/api
+tags:
+  - name: Project
+  - name: Moderation
+  - name: Camp Shares
+x-tagGroups:
+  - name: API
+    tags:
+      - Project
+      - Moderation
+      - Camp Shares
+paths:
+  /projects/{project_id}:
+    parameters:
+      - schema:
+          type: integer
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+    post:
+      tags:
+        - Project
+      summary: ''
+      operationId: post-projects-project_id
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Create a new project contract in a pre-initialized state. Call `SET_BACKERS` to initialize.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                project_id:
+                  type: integer
+                milestones:
+                  type: array
+                  items:
+                    type: integer
+                release_percents:
+                  type: array
+                  items:
+                    type: integer
+                creator:
+                  type: integer
+    get:
+      tags:
+        - Project
+      summary: ''
+      operationId: get-projects-project_id
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  project_id:
+                    type: integer
+                  contract_address:
+                    type: string
+                  created_at:
+                    type: string
+                  modified_at:
+                    type: string
+                  completed_at:
+                    type: string
+                  next_activity_date:
+                    type: string
+                  activities_completed:
+                    type: array
+                    items:
+                      type: string
+                  project_activities_list:
+                    type: object
+                    properties:
+                      project_activity_id:
+                        type: integer
+                      project_id:
+                        type: integer
+                      created_at:
+                        type: string
+                      modified_at:
+                        type: string
+                      transaction_hash:
+                        type: object
+                        properties:
+                          string:
+                            type: string
+                          valid:
+                            type: boolean
+                      activity_status:
+                        type: integer
+                      activity_type:
+                        type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Get information on the project state and the project's past activity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                project_id:
+                  type: integer
+  /projects/{project_id}/SET_PROJECT_INFO:
+    parameters:
+      - schema:
+          type: integer
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+    post:
+      tags:
+        - Project
+      summary: ''
+      operationId: post-projects-project_id-SET_PROJECT_INFO
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Set project listing fee information along with a list of backers and pledged amounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fk_project_id:
+                  type: integer
+                listing_fee:
+                  type: integer
+                total_raised:
+                  type: integer
+                beneficiaries:
+                  type: array
+                  items:
+                    type: integer
+                amounts:
+                  type: array
+                  items:
+                    type: integer
+                funding_complete:
+                  type: boolean
+                total_amount:
+                  type: integer
+  /projects/{project_id}/SET_BACKERS:
+    parameters:
+      - schema:
+          type: integer
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+    post:
+      tags:
+        - Project
+      summary: ''
+      operationId: post-projects-project_id-SET_BACKERS
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Set a project's backers and pledge amounts.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fk_project_id:
+                  type: integer
+                beneficiaries:
+                  type: array
+                  items:
+                    type: integer
+                amounts:
+                  type: array
+                  items:
+                    type: integer
+                funding_complete:
+                  type: boolean
+                total_amount:
+                  type: integer
+  /projects/{project_id}/MILESTONE_VOTE:
+    parameters:
+      - schema:
+          type: integer
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+    post:
+      tags:
+        - Project
+      summary: ''
+      operationId: post-projects-project_id-MILESTONE_VOTE
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Project backer endpoint to submit a milestone vote.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                vote:
+                  type: boolean
+                vote_type:
+                  type: integer
+                fk_project_id:
+                  type: integer
+  /projects/{project_id}/CHECK_MILESTONE:
+    parameters:
+      - schema:
+          type: integer
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+    post:
+      tags:
+        - Project
+      summary: ''
+      operationId: post-projects-project_id-CHECK_MILESTONE
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Check if the milestone has been reached and tally insurance votes to mark the milestone as passed or failed.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fk_project_id:
+                  type: integer
+        description: ''
+  /projects/{project_id}/WITHDRAW_FUNDS:
+    parameters:
+      - schema:
+          type: integer
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+    post:
+      tags:
+        - Project
+      summary: ''
+      operationId: post-projects-project_id-WITHDRAW_FUNDS
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Withdraw funds to the creator after a project milestone successfully passes.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                user_id:
+                  type: integer
+                fk_project_id:
+                  type: integer
+  /projects/{project_id}/REQUEST_REFUND:
+    parameters:
+      - schema:
+          type: integer
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+    post:
+      tags:
+        - Project
+      summary: ''
+      operationId: post-projects-project_id-REQUEST_REFUND
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Recover backer refunds after a milestone vote fails.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                user_id:
+                  type: integer
+                fk_project_id:
+                  type: integer
+  /projects/{project_id}/FAILED_FUND_RECOVERY:
+    parameters:
+      - schema:
+          type: integer
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+    post:
+      tags:
+        - Project
+      summary: ''
+      operationId: post-projects-project_id-FAILED_FUND_RECOVERY
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Recover funds from a project if its balance has not been cleared 90 days after completion.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fk_project_id:
+                  type: integer
+          application/xml:
+            schema:
+              type: object
+              properties:
+                contract_address:
+                  type: string
+                fk_project_id:
+                  type: integer
+        description: ''
+  /projects/{project_id}/START_MODERATION:
+    parameters:
+      - schema:
+          type: integer
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+    post:
+      tags:
+        - Moderation
+      summary: ''
+      operationId: post-projects-project_id-START_MODERATION
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Set project moderators and initiate moderation voting process.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                moderators:
+                  type: array
+                  items:
+                    type: integer
+                moderation_end_time:
+                  type: integer
+                fk_project_id:
+                  type: integer
+  /projects/{project_id}/MODERATION_VOTE:
+    post:
+      tags:
+        - Moderation
+      summary: ''
+      operationId: 'post-projects-project_id:integer-MODERATION_VOTE'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Submit encrypted moderation vote.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                vote:
+                  type: boolean
+                decryption_key:
+                  type: string
+                vote_type:
+                  type: integer
+                fk_project_id:
+                  type: integer
+    parameters:
+      - schema:
+          type: string
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+  /projects/{project_id}/COMMIT_MODERATION_VOTES:
+    parameters:
+      - schema:
+          type: integer
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+    post:
+      tags:
+        - Moderation
+      summary: ''
+      operationId: post-projects-project_id-COMMIT_MODERATION_VOTES
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Close off moderation voting once 7 or more votes have been received, and decrypt votes.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fk_project_id:
+                  type: integer
+                encrypted_votes:
+                  type: array
+                  items:
+                    type: string
+                decryption_keys:
+                  type: array
+                  items:
+                    type: string
+  /projects/{project_id}/CANCEL_PROJECT:
+    parameters:
+      - schema:
+          type: integer
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+    post:
+      tags:
+        - Moderation
+      summary: ''
+      operationId: post-projects-project_id-CANCEL_PROJECT
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Tally moderation votes. If cancellation votes exceed 50% the project will be cancelled.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fk_project_id:
+                  type: integer
+  /cs/{user_id}/STAKE_PLG:
+    parameters:
+      - schema:
+          type: integer
+        name: user_id
+        in: path
+        required: true
+        description: CS Holder User ID
+    post:
+      tags:
+        - Camp Shares
+      summary: ''
+      operationId: post-cs-user_id-STAKE_PLG
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Stake PLG tokens in exchange for CampShares
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                amount:
+                  type: integer
+  /cs/{user_id}/UNSTAKE_PLG:
+    parameters:
+      - schema:
+          type: integer
+        name: user_id
+        in: path
+        required: true
+        description: CS Holder User ID
+    post:
+      tags:
+        - Camp Shares
+      summary: ''
+      operationId: post-cs-user_id-UNSTAKE_PLG
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Unstake CampShares - convert back to PLG tokens with a time lock
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+  /cs/{user_id}/WITHDRAW_INTEREST:
+    parameters:
+      - schema:
+          type: integer
+        name: user_id
+        in: path
+        required: true
+        description: CS Holder User ID
+    post:
+      tags:
+        - Camp Shares
+      summary: ''
+      operationId: post-cs-user_id-WITHDRAW_INTEREST
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Allow users to withdraw any accrued interest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+  /cs/{user_id}/REINVEST_PLG:
+    parameters:
+      - schema:
+          type: integer
+        name: user_id
+        in: path
+        required: true
+        description: CS Holder User ID
+    post:
+      tags:
+        - Camp Shares
+      summary: ''
+      operationId: post-cs-user_id-REINVEST_PLG
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Stake interest accrued for CS
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+  /cs/{user_id}/POST_INTEREST:
+    post:
+      summary: ''
+      operationId: post-cs-POST_INTEREST
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Post an interest payment to the pool of CS holders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+  /cs/{user_id}/GET_GAINS:
+    parameters:
+      - schema:
+          type: string
+        name: user_id
+        in: path
+        required: true
+    get:
+      tags:
+        - Camp Shares
+      summary: ''
+      operationId: post-cs-GET-GAINS
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Get accrued interest for CS Holder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+  /users/{user_id}/GET_BALANCE:
+    parameters:
+      - schema:
+          type: string
+        name: user_id
+        in: path
+        required: true
+    get:
+      tags:
+        - Camp Shares
+      summary: ''
+      operationId: post-cs-GET-BALANCE
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Get balance for user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+components:
+  schemas:
+    campshare:
+      title: campshare
+      type: object
+      description: Record of all CampShares transactions
+      properties:
+        cs_id:
+          type: integer
+        contract_address:
+          type: string
+        created_at:
+          type: integer
+        cs_type:
+          type: integer
+        user_id:
+          type: integer
+        amount:
+          type: integer
+        balance_movement:
+          type: integer
+        unstake_complete_date:
+          type: integer
+        cs_param:
+          type: object
+          properties:
+            is_moderator:
+              type: integer
+            project_id:
+              type: integer
+    cs_activity:
+      title: cs_activity
+      type: object
+      description: Keep track of activities related to CS
+      properties:
+        cs_activity_id:
+          type: integer
+        fk_cs_id:
+          type: integer
+        created_at:
+          type: integer
+        modified_at:
+          type: integer
+        transaction_hash:
+          type: string
+        activity_status:
+          type: integer
+        activity_type:
+          type: string
+    project:
+      title: project
+      type: object
+      description: Keeps track of all projects on the blockchain
+      properties:
+        id:
+          type: integer
+        contract_address:
+          type: string
+        created_at:
+          type: integer
+        completed_at:
+          type: integer
+        status:
+          type: integer
+        next_activity_date:
+          type: integer
+        activities_completed:
+          type: array
+          items:
+            type: string
+        project_param:
+          type: object
+          properties:
+            milestones:
+              type: array
+              items:
+                type: integer
+            release_percents:
+              type: array
+              items:
+                type: integer
+            backers:
+              type: array
+              items:
+                type: integer
+            amounts:
+              type: array
+              items:
+                type: integer
+            funding_complete:
+              type: boolean
+            moderators:
+              type: array
+              items:
+                type: integer
+            fee_percentage:
+              type: integer
+            total_raised:
+              type: integer
+            total_amount:
+              type: integer
+            creator:
+              type: integer
+    project_activity:
+      title: project_activity
+      type: object
+      properties:
+        project_activity_id:
+          type: integer
+        fk_project_id:
+          type: integer
+        created_at:
+          type: integer
+        modified_at:
+          type: integer
+        transaction_hash:
+          type: string
+        activity_status:
+          type: integer
+        activity_type:
+          type: string
+    votes:
+      title: votes
+      type: object
+      description: Keeps track of both milestone and moderation votes from users
+      properties:
+        vote_id:
+          type: integer
+        contract_address:
+          type: string
+        vote_created_at:
+          type: integer
+        user_id:
+          type: integer
+        fk_project_id:
+          type: integer
+        vote_param:
+          type: object
+          properties:
+            vote:
+              type: boolean
+            encrypted_vote:
+              type: string
+            decryption_key:
+              type: string
+            vote_type:
+              type: integer
+    project_state:
+      title: project_state
+      type: object
+      properties:
+        ProjectId:
+          type: integer
+        ContractAddress:
+          type: string
+        CreatedAt:
+          type: integer
+        ModifiedAt:
+          type: integer
+        CompletedAt:
+          type: integer
+        NextActivityDate:
+          type: integer
+        ActivitiesCompleted:
+          type: array
+          items:
+            type: string
+        ProjectActivitiesList:
+          type: object
+      description: Model response related to calls to get project state and associated activities
+    cs_state:
+      title: cs_state
+      type: object
+      properties:
+        user_id:
+          type: number
+        current_balance:
+          type: number
+        cs_activities_list:
+          type: array
+          items:
+            type: string
+      description: Model response related to calls to user CS state and associated activities
+    cs_interest_date:
+      title: cs_interest_date
+      type: object
+      properties:
+        interest_date_id:
+          type: number
+        created_at:
+          type: number
+        interest_date:
+          type: number
+        interest_date_passed:
+          type: boolean
+      description: Keeps track of CS interest dates since initial deployment
