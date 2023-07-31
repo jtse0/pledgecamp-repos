@@ -1,0 +1,1915 @@
+openapi: 3.0.0
+info:
+  title: Pledgecamp Nodeserver
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000/api'
+    description: Development
+  - url: 'https://pledgecamp.com/api'
+    description: Production
+tags:
+  - name: Project
+  - name: Moderation
+  - name: Camp Shares
+x-tagGroups:
+  - name: API
+    tags:
+      - Project
+      - Moderation
+      - Camp Shares
+paths:
+  /projects/{project_id}/:
+    parameters:
+      - schema:
+          type: integer
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+    post:
+      tags:
+        - Project
+      summary: ''
+      operationId: post-api-projects-project_id
+      responses:
+        '201':
+          description: Created
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_parent_id:
+                    type: integer
+                  transaction_callback:
+                    type: string
+                  transaction_status:
+                    type: integer
+                  transaction_type:
+                    type: string
+                  transaction_uuid:
+                    type: string
+                  transaction_retry_attempts:
+                    type: integer
+                  transaction_block_number:
+                    type: integer
+                  transaction_from:
+                    type: string
+                  transaction_gas_used:
+                    type: integer
+                  transaction_hash:
+                    type: string
+                  transaction_to:
+                    type: string
+                  transaction_events:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: 'Create a new project on the blockchain                '
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                project_id:
+                  type: integer
+                activity_id:
+                  type: integer
+                milestone_times:
+                  type: array
+                  items:
+                    type: integer
+                release_percents:
+                  type: array
+                  items:
+                    type: integer
+                url_callback:
+                  type: string
+            examples: {}
+  /admin/projects/{project_id}/SET_PROJECT_INFO:
+    parameters:
+      - schema:
+          type: integer
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+    post:
+      tags:
+        - Project
+      summary: ''
+      operationId: post-api-admin-projects-project_id-SET_PROJECT_INFO
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_uuid:
+                    type: string
+                  transaction_parent_id:
+                    type: integer
+                  transaction_type:
+                    type: string
+                  transaction_callback:
+                    type: string
+                  transaction_hash:
+                    type: string
+                  transaction_serialized:
+                    type: string
+                  transaction_index:
+                    type: integer
+                  transaction_status:
+                    type: integer
+                  transaction_to:
+                    type: string
+                  transaction_from:
+                    type: string
+                  transaction_contract_address:
+                    type: string
+                  transaction_block_number:
+                    type: integer
+                  transaction_gas_used:
+                    type: integer
+                  transaction_retry_attempts:
+                    type: integer
+                  transaction_events:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Set listing fee for project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                contract_address:
+                  type: string
+                listing_fee:
+                  type: integer
+                activity_id:
+                  type: integer
+                url_callback:
+                  type: string
+  /manager/projects/{project_id}/SET_BACKERS:
+    parameters:
+      - schema:
+          type: integer
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+    post:
+      tags:
+        - Project
+      summary: ''
+      operationId: post-api-manager-projects-project_id-SET_BACKERS
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_uuid:
+                    type: string
+                  transaction_parent_id:
+                    type: integer
+                  transaction_type:
+                    type: string
+                  transaction_callback:
+                    type: string
+                  transaction_hash:
+                    type: string
+                  transaction_serialized:
+                    type: string
+                  transaction_index:
+                    type: integer
+                  transaction_status:
+                    type: integer
+                  transaction_to:
+                    type: string
+                  transaction_from:
+                    type: string
+                  transaction_contract_address:
+                    type: string
+                  transaction_block_number:
+                    type: integer
+                  transaction_gas_used:
+                    type: integer
+                  transaction_retry_attempts:
+                    type: integer
+                  transaction_events:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                beneficiaries:
+                  type: array
+                  items:
+                    type: integer
+                amounts:
+                  type: array
+                  items:
+                    type: integer
+                funding_complete:
+                  type: boolean
+                total_amount:
+                  type: integer
+                contract_address:
+                  type: string
+                activity_id:
+                  type: integer
+                url_callback:
+                  type: string
+      description: Set list of backers and amounts pledged to project
+  /manager/projects/{project-id}/MILESTONE_VOTE/{user-id}:
+    parameters:
+      - schema:
+          type: integer
+        name: project-id
+        in: path
+        required: true
+        description: Project ID from backend
+      - schema:
+          type: integer
+        name: user-id
+        in: path
+        required: true
+        description: User ID of backer
+    post:
+      tags:
+        - Project
+      summary: ''
+      operationId: post-manager-projects-project-id-MILESTONE_VOTE-user-id
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_uuid:
+                    type: string
+                  transaction_parent_id:
+                    type: integer
+                  transaction_type:
+                    type: string
+                  transaction_callback:
+                    type: string
+                  transaction_hash:
+                    type: string
+                  transaction_serialized:
+                    type: string
+                  transaction_index:
+                    type: integer
+                  transaction_status:
+                    type: integer
+                  transaction_to:
+                    type: string
+                  transaction_from:
+                    type: string
+                  transaction_contract_address:
+                    type: string
+                  transaction_block_number:
+                    type: integer
+                  transaction_gas_used:
+                    type: integer
+                  transaction_retry_attempts:
+                    type: integer
+                  transaction_events:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                contract_address:
+                  type: string
+                user_id:
+                  type: integer
+                vote:
+                  type: boolean
+                activity_id:
+                  type: integer
+                url_callback:
+                  type: string
+            examples: {}
+      description: Individual milestone votes from backers
+  /projects/{project-id}/CHECK_MILESTONE/:
+    parameters:
+      - schema:
+          type: integer
+        name: project-id
+        in: path
+        required: true
+        description: Project ID from backend
+    post:
+      tags:
+        - Project
+      summary: ''
+      operationId: post-projects-project-id-CHECK_MILESTONE
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_uuid:
+                    type: string
+                  transaction_parent_id:
+                    type: integer
+                  transaction_type:
+                    type: string
+                  transaction_callback:
+                    type: string
+                  transaction_hash:
+                    type: string
+                  transaction_serialized:
+                    type: string
+                  transaction_index:
+                    type: integer
+                  transaction_status:
+                    type: integer
+                  transaction_to:
+                    type: string
+                  transaction_from:
+                    type: string
+                  transaction_contract_address:
+                    type: string
+                  transaction_block_number:
+                    type: integer
+                  transaction_gas_used:
+                    type: integer
+                  transaction_retry_attempts:
+                    type: integer
+                  transaction_events:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                contract_address:
+                  type: string
+                activity_id:
+                  type: integer
+                url_callback:
+                  type: string
+      description: Check that milestone has been reached and decide whether milestone has passed or failed after tallying milestone votes
+  /manager/projects/{project_id}/REQUEST_REFUND:
+    parameters:
+      - schema:
+          type: integer
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+    post:
+      tags:
+        - Project
+      summary: ''
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_uuid:
+                    type: string
+                  transaction_parent_id:
+                    type: integer
+                  transaction_type:
+                    type: string
+                  transaction_callback:
+                    type: string
+                  transaction_hash:
+                    type: string
+                  transaction_serialized:
+                    type: string
+                  transaction_index:
+                    type: integer
+                  transaction_status:
+                    type: integer
+                  transaction_to:
+                    type: string
+                  transaction_from:
+                    type: string
+                  transaction_contract_address:
+                    type: string
+                  transaction_block_number:
+                    type: integer
+                  transaction_gas_used:
+                    type: integer
+                  transaction_retry_attempts:
+                    type: integer
+                  transaction_events:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      operationId: get-manager-projects-project_id-REQUEST_REFUND
+      description: Initiates refund if milestone has failed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                contract_address:
+                  type: string
+                user_id:
+                  type: integer
+                activity_id:
+                  type: integer
+                url_callback:
+                  type: string
+  /manager/projects/{project_id}/WITHDRAW_FUNDS:
+    parameters:
+      - schema:
+          type: string
+        name: project_id
+        in: path
+        required: true
+    post:
+      tags:
+        - Project
+      summary: ''
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_uuid:
+                    type: string
+                  transaction_parent_id:
+                    type: integer
+                  transaction_type:
+                    type: string
+                  transaction_callback:
+                    type: string
+                  transaction_hash:
+                    type: string
+                  transaction_serialized:
+                    type: string
+                  transaction_index:
+                    type: integer
+                  transaction_status:
+                    type: integer
+                  transaction_to:
+                    type: string
+                  transaction_from:
+                    type: string
+                  transaction_contract_address:
+                    type: string
+                  transaction_block_number:
+                    type: integer
+                  transaction_gas_used:
+                    type: integer
+                  transaction_retry_attempts:
+                    type: integer
+                  transaction_events:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      operationId: get-manager-projects-project_id-WITHDRAW_FUNDS
+      description: Initiates withdrawal if milestone has passed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                contract_address:
+                  type: string
+                user_id:
+                  type: integer
+                activity_id:
+                  type: integer
+                url_callback:
+                  type: string
+  /projects/{project_id}/FAILED_FUND_RECOVERY:
+    parameters:
+      - schema:
+          type: string
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+    post:
+      tags:
+        - Project
+      summary: ''
+      operationId: post-projects-project_id-FAILED_FUND_RECOVERY
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_uuid:
+                    type: string
+                  transaction_parent_id:
+                    type: integer
+                  transaction_type:
+                    type: string
+                  transaction_callback:
+                    type: string
+                  transaction_hash:
+                    type: string
+                  transaction_serialized:
+                    type: string
+                  transaction_index:
+                    type: integer
+                  transaction_status:
+                    type: integer
+                  transaction_to:
+                    type: string
+                  transaction_from:
+                    type: string
+                  transaction_contract_address:
+                    type: string
+                  transaction_block_number:
+                    type: integer
+                  transaction_gas_used:
+                    type: integer
+                  transaction_retry_attempts:
+                    type: integer
+                  transaction_events:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Recover any remaining funds from a Project contract if funds have not been transferred out after 90 days
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                contract_address:
+                  type: string
+                activity_id:
+                  type: integer
+                url_callback:
+                  type: string
+  /cs/projects/{project_id}/START_MODERATION:
+    post:
+      tags:
+        - Moderation
+      summary: ''
+      operationId: 'post-cs-projects-project_id:-integer-START_MODERATION'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_uuid:
+                    type: string
+                  transaction_parent_id:
+                    type: integer
+                  transaction_type:
+                    type: string
+                  transaction_callback:
+                    type: string
+                  transaction_hash:
+                    type: string
+                  transaction_serialized:
+                    type: string
+                  transaction_index:
+                    type: integer
+                  transaction_status:
+                    type: integer
+                  transaction_to:
+                    type: string
+                  transaction_from:
+                    type: string
+                  transaction_contract_address:
+                    type: string
+                  transaction_block_number:
+                    type: integer
+                  transaction_gas_used:
+                    type: integer
+                  transaction_retry_attempts:
+                    type: integer
+                  transaction_events:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Set list of moderators and initiate moderation vote
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                contract_address:
+                  type: string
+                moderators:
+                  type: array
+                  items:
+                    type: integer
+                moderation_end_time:
+                  type: integer
+                activity_id:
+                  type: integer
+                url_callback:
+                  type: string
+    parameters:
+      - schema:
+          type: integer
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+  /manager/projects/{project_id}/MODERATION_VOTE/{user_id}:
+    parameters:
+      - schema:
+          type: integer
+        name: user_id
+        in: path
+        required: true
+        description: User ID of Moderator
+      - schema:
+          type: integer
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+    post:
+      tags:
+        - Moderation
+      summary: ''
+      operationId: post-manager-projects-project_id-MODERATION_VOTE-user_id
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_uuid:
+                    type: string
+                  transaction_parent_id:
+                    type: integer
+                  transaction_type:
+                    type: string
+                  transaction_callback:
+                    type: string
+                  transaction_hash:
+                    type: string
+                  transaction_serialized:
+                    type: string
+                  transaction_index:
+                    type: integer
+                  transaction_status:
+                    type: integer
+                  transaction_to:
+                    type: string
+                  transaction_from:
+                    type: string
+                  transaction_contract_address:
+                    type: string
+                  transaction_block_number:
+                    type: integer
+                  transaction_gas_used:
+                    type: integer
+                  transaction_retry_attempts:
+                    type: integer
+                  transaction_events:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Submit moderation vote
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                contract_address:
+                  type: string
+                user_id:
+                  type: integer
+                encrypted_vote:
+                  type: string
+                activity_id:
+                  type: integer
+                url_callback:
+                  type: string
+  /moderator/projects/{project_id}/COMMIT_MODERATION_VOTES:
+    post:
+      tags:
+        - Moderation
+      summary: ''
+      operationId: 'post-moderator-projects-project_id:integer-COMMIT_MODERATION_VOTES'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_uuid:
+                    type: string
+                  transaction_parent_id:
+                    type: integer
+                  transaction_type:
+                    type: string
+                  transaction_callback:
+                    type: string
+                  transaction_hash:
+                    type: string
+                  transaction_serialized:
+                    type: string
+                  transaction_index:
+                    type: integer
+                  transaction_status:
+                    type: integer
+                  transaction_to:
+                    type: string
+                  transaction_from:
+                    type: string
+                  transaction_contract_address:
+                    type: string
+                  transaction_block_number:
+                    type: integer
+                  transaction_gas_used:
+                    type: integer
+                  transaction_retry_attempts:
+                    type: integer
+                  transaction_events:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Close off moderation voting and decrypt votes if at least 7 have been submitted
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                votes:
+                  type: array
+                  items:
+                    type: boolean
+                decryption_keys:
+                  type: array
+                  items:
+                    type: string
+                user_ids:
+                  type: array
+                  items:
+                    type: integer
+                contract_address:
+                  type: string
+                project_id:
+                  type: integer
+                activity_id:
+                  type: integer
+                url_callback:
+                  type: string
+    parameters:
+      - schema:
+          type: string
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+  /moderator/projects/{project_id}/CANCEL_PROJECT:
+    parameters:
+      - schema:
+          type: string
+        name: project_id
+        in: path
+        required: true
+        description: Project ID from backend
+    post:
+      tags:
+        - Moderation
+      summary: ''
+      operationId: post-moderator-projects-project_id-CANCEL_PROJECT
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_uuid:
+                    type: string
+                  transaction_parent_id:
+                    type: integer
+                  transaction_type:
+                    type: string
+                  transaction_callback:
+                    type: string
+                  transaction_hash:
+                    type: string
+                  transaction_serialized:
+                    type: string
+                  transaction_index:
+                    type: integer
+                  transaction_status:
+                    type: integer
+                  transaction_to:
+                    type: string
+                  transaction_from:
+                    type: string
+                  transaction_contract_address:
+                    type: string
+                  transaction_block_number:
+                    type: integer
+                  transaction_gas_used:
+                    type: integer
+                  transaction_retry_attempts:
+                    type: integer
+                  transaction_events:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Tally votes from moderation voting and decide if project should be marked as cancelled
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                contract_address:
+                  type: string
+                activity_id:
+                  type: integer
+                url_callback:
+                  type: string
+          application/xml:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                contract_address:
+                  type: string
+                activity_id:
+                  type: integer
+                url_callback:
+                  type: string
+  /manager/cs/{user_id}/STAKE_PLG:
+    parameters:
+      - schema:
+          type: string
+        name: user_id
+        in: path
+        required: true
+        description: CS Holder User ID
+    post:
+      tags:
+        - Camp Shares
+      summary: ''
+      operationId: post-manager-cs-user_id-STAKE_PLG
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_uuid:
+                    type: string
+                  transaction_parent_id:
+                    type: integer
+                  transaction_type:
+                    type: string
+                  transaction_callback:
+                    type: string
+                  transaction_hash:
+                    type: string
+                  transaction_serialized:
+                    type: string
+                  transaction_index:
+                    type: integer
+                  transaction_status:
+                    type: integer
+                  transaction_to:
+                    type: string
+                  transaction_from:
+                    type: string
+                  transaction_contract_address:
+                    type: string
+                  transaction_block_number:
+                    type: integer
+                  transaction_gas_used:
+                    type: integer
+                  transaction_retry_attempts:
+                    type: integer
+                  transaction_events:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Allow user to stake PLG tokens for CampShares
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                user_id:
+                  type: integer
+                amount:
+                  type: integer
+                activity_id:
+                  type: integer
+                url_callback:
+                  type: string
+  /manager/cs/{user_id}/UNSTAKE_PLG:
+    parameters:
+      - schema:
+          type: string
+        name: user_id
+        in: path
+        required: true
+        description: CS Holder User ID
+    post:
+      tags:
+        - Camp Shares
+      summary: ''
+      operationId: post-manager-cs-user_id-UNSTAKE_PLG
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_uuid:
+                    type: string
+                  transaction_parent_id:
+                    type: integer
+                  transaction_type:
+                    type: string
+                  transaction_callback:
+                    type: string
+                  transaction_hash:
+                    type: string
+                  transaction_serialized:
+                    type: string
+                  transaction_index:
+                    type: integer
+                  transaction_status:
+                    type: integer
+                  transaction_to:
+                    type: string
+                  transaction_from:
+                    type: string
+                  transaction_contract_address:
+                    type: string
+                  transaction_block_number:
+                    type: integer
+                  transaction_gas_used:
+                    type: integer
+                  transaction_retry_attempts:
+                    type: integer
+                  transaction_events:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Allow users to unstake CampShares for PLG Tokens
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                user_id:
+                  type: integer
+                activity_id:
+                  type: integer
+                url_callback:
+                  type: string
+  /manager/cs/{user_id}/WITHDRAW_INTEREST:
+    parameters:
+      - schema:
+          type: string
+        name: user_id
+        in: path
+        required: true
+        description: CS Holder User ID
+    post:
+      tags:
+        - Camp Shares
+      summary: ''
+      operationId: post-manager-cs-user_id-WITHDRAW_INTEREST
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_uuid:
+                    type: string
+                  transaction_parent_id:
+                    type: integer
+                  transaction_type:
+                    type: string
+                  transaction_callback:
+                    type: string
+                  transaction_hash:
+                    type: string
+                  transaction_serialized:
+                    type: string
+                  transaction_index:
+                    type: integer
+                  transaction_status:
+                    type: integer
+                  transaction_to:
+                    type: string
+                  transaction_from:
+                    type: string
+                  transaction_contract_address:
+                    type: string
+                  transaction_block_number:
+                    type: integer
+                  transaction_gas_used:
+                    type: integer
+                  transaction_retry_attempts:
+                    type: integer
+                  transaction_events:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Withdraw PLG interest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                user_id:
+                  type: integer
+                activity_id:
+                  type: integer
+                url_callback:
+                  type: string
+  /manager/cs/{user_id}/REINVEST_PLG:
+    parameters:
+      - schema:
+          type: string
+        name: user_id
+        in: path
+        required: true
+        description: CS Holder User ID
+    post:
+      tags:
+        - Camp Shares
+      summary: ''
+      operationId: post-manager-cs-user_id-REINVEST_PLG
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_uuid:
+                    type: string
+                  transaction_parent_id:
+                    type: integer
+                  transaction_type:
+                    type: string
+                  transaction_callback:
+                    type: string
+                  transaction_hash:
+                    type: string
+                  transaction_serialized:
+                    type: string
+                  transaction_index:
+                    type: integer
+                  transaction_status:
+                    type: integer
+                  transaction_to:
+                    type: string
+                  transaction_from:
+                    type: string
+                  transaction_contract_address:
+                    type: string
+                  transaction_block_number:
+                    type: integer
+                  transaction_gas_used:
+                    type: integer
+                  transaction_retry_attempts:
+                    type: integer
+                  transaction_events:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Reinvest interest received in PLG and stake for CS
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                user_id:
+                  type: integer
+                activity_id:
+                  type: integer
+                url_callback:
+                  type: string
+  /rawTx:
+    post:
+      summary: ''
+      operationId: post-rawTx
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_uuid:
+                    type: string
+                  transaction_parent_id:
+                    type: integer
+                  transaction_type:
+                    type: string
+                  transaction_callback:
+                    type: string
+                  transaction_hash:
+                    type: string
+                  transaction_serialized:
+                    type: string
+                  transaction_index:
+                    type: integer
+                  transaction_status:
+                    type: integer
+                  transaction_to:
+                    type: string
+                  transaction_from:
+                    type: string
+                  transaction_contract_address:
+                    type: string
+                  transaction_block_number:
+                    type: integer
+                  transaction_gas_used:
+                    type: integer
+                  transaction_retry_attempts:
+                    type: integer
+                  transaction_events:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                transaction_serialized:
+                  type: string
+                url_callback:
+                  type: string
+      description: Enable raw transactions to go through the queue into the blockchain
+  /cs/POST_INTEREST:
+    post:
+      tags:
+        - Camp Shares
+      summary: POST_INTEREST
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_uuid:
+                    type: string
+                  transaction_parent_id:
+                    type: integer
+                  transaction_type:
+                    type: string
+                  transaction_callback:
+                    type: string
+                  transaction_hash:
+                    type: string
+                  transaction_serialized:
+                    type: string
+                  transaction_index:
+                    type: integer
+                  transaction_status:
+                    type: integer
+                  transaction_to:
+                    type: string
+                  transaction_from:
+                    type: string
+                  transaction_contract_address:
+                    type: string
+                  transaction_block_number:
+                    type: integer
+                  transaction_gas_used:
+                    type: integer
+                  transaction_retry_attempts:
+                    type: integer
+                  transaction_events:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Post interest payment pool for CS holders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                amount:
+                  type: integer
+                activity_id:
+                  type: integer
+                url_callback:
+                  type: string
+      operationId: post-manager-cs-POST-INTEREST
+  /cs/gains/{user_id}:
+    parameters:
+      - schema:
+          type: string
+        name: user_id
+        in: path
+        required: true
+    get:
+      tags:
+        - Camp Shares
+      summary: GET_GAINS
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_uuid:
+                    type: string
+                  transaction_parent_id:
+                    type: integer
+                  transaction_type:
+                    type: string
+                  transaction_callback:
+                    type: string
+                  transaction_hash:
+                    type: string
+                  transaction_serialized:
+                    type: string
+                  transaction_index:
+                    type: integer
+                  transaction_status:
+                    type: integer
+                  transaction_to:
+                    type: string
+                  transaction_from:
+                    type: string
+                  transaction_contract_address:
+                    type: string
+                  transaction_block_number:
+                    type: integer
+                  transaction_gas_used:
+                    type: integer
+                  transaction_retry_attempts:
+                    type: integer
+                  transaction_events:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+      description: Get accrued interest for CS Holder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_type:
+                  type: string
+                amount:
+                  type: integer
+                activity_id:
+                  type: integer
+                url_callback:
+                  type: string
+      operationId: get-cs-gains-user_id
+components:
+  schemas:
+    transactions:
+      title: transactions
+      type: object
+      description: ''
+      properties:
+        transaction_uuid:
+          type: string
+        transaction_parent_id:
+          type: string
+        transaction_type:
+          type: string
+        transaction_callback:
+          type: string
+        transaction_hash:
+          type: string
+        transaction_serialized:
+          type: string
+        transaction_index:
+          type: integer
+        transaction_status:
+          type: string
+        transaction_to:
+          type: string
+        transaction_from:
+          type: string
+        transaction_contract_address:
+          type: string
+        transaction_block_number:
+          type: integer
+        transaction_gas_used:
+          type: integer
+        transaction_retry_attempts:
+          type: integer
+        transaction_events:
+          type: object
+      required:
+        - transaction_uuid
+        - transaction_callback
+        - transaction_serialized
+        - transaction_status
+    gas_price:
+      title: gas_price
+      type: object
+      properties:
+        price_id:
+          type: string
+        price_timestamp:
+          type: string
+        price_source:
+          type: string
+        price_low:
+          type: string
+        price_low_time:
+          type: string
+        price_average:
+          type: string
+        price_average_time:
+          type: string
+        price_fast:
+          type: string
+        price_fast_time:
+          type: string
+        price_fastest:
+          type: string
+        price_fastest_time:
+          type: string
+      required:
+        - price_timestamp

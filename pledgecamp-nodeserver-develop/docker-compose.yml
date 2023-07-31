@@ -1,0 +1,20 @@
+version: '3'
+services:
+  postgresql:
+    container_name: pledgecamp_nodeserver_postgresql
+    image: postgres:12-alpine
+    ports:
+      - 6011:5432
+    environment:
+      - POSTGRES_DB=pledgecamp_nodeserver
+      - POSTGRES_PASSWORD=development
+      - POSTGRES_USER=pledgecamp_nodeserver
+  rabbitmq:
+    container_name: pledgecamp_nodeserver_rabbitmq
+    image: rabbitmq:3-management-alpine
+    environment:
+      - RABBITMQ_DEFAULT_USER=pledgecamp_nodeserver
+      - RABBITMQ_DEFAULT_PASS=development
+    ports:
+      - 6020:5672
+      # - 15672:15672 Uncomment if want the management interface

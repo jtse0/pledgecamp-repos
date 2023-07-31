@@ -1,0 +1,8 @@
+# Ignore artifacts:
+dist
+coverage
+logs
+
+# Ignore Github templates
+.github
+.git

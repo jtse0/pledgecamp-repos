@@ -1,0 +1,3 @@
+dropdb pledgecamp_nodeserver
+createdb pledgecamp_nodeserver
+knex migrate:latest
